@@ -1,0 +1,11 @@
+@(invoiceForm: Form[Invoice])
+@import helper._
+
+@main("Create Invoice") {
+    @form(routes.InvoiceController.save) {
+        @inputText(invoiceForm("invoiceNumber"), '_label -> "Invoice Number")
+        @inputText(invoiceForm("total"), '_label -> "Invoice Total")
+        <input type="submit" value="Create">
+        <a href="@routes.InvoiceController.index" class="btn">Cancel</a>
+    }
+}

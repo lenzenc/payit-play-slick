@@ -1,0 +1,32 @@
+@(invoices: List[Invoice])
+@import helper._
+
+@main("Invoices") {
+    <table border="1">
+        <thead>
+            <tr>
+                <td colspan="2">@invoices.size Invoices(s)</td>
+                <td><a class="btn success" id="add" href="@routes.InvoiceController.create">Add Invoice</a></td>
+            </tr>
+            <tr>
+                <td width="300">Invoice Number</td>
+                <td width="75" align="right">Total</td>
+                <td align="center">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+        @invoices.map { invoice =>
+            <tr>
+                <td>@invoice.invoiceNumber</td>
+                <td>@invoice.total</td>
+                <td>
+                @form(routes.InvoiceController.destory(invoice.id.get)) {
+                    <input type="submit" value="Delete">
+                }
+                <a href="@routes.InvoiceController.edit(invoice.id.get)">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

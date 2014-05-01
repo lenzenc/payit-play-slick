@@ -1,0 +1,15 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.InvoiceController.index
+
+GET     /invoices/new               controllers.InvoiceController.create
+GET     /invoices/edit/:id			controllers.InvoiceController.edit(id:Long)
+POST    /invoices/edit/:id			controllers.InvoiceController.update(id:Long)
+POST    /invoices                   controllers.InvoiceController.save
+POST    /invoices/:id/delete        controllers.InvoiceController.destory(id: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
