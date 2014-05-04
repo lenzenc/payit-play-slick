@@ -17,16 +17,7 @@ trait UserAuthenticatorComponent extends ServiceComponent with UserDAOComponent 
 
     def authenticate(username: String, password: String): Option[User] = {
       val user = userDAO.findByUsername(username)
-      if (user.isDefined) {
-        if (user.get.password == password) {
-          user
-        } else {
-          None
-        }
-      } else {
-        None
-      }
-
+      if (user.isDefined && user.get.password == password) user else None
     }
 
   }

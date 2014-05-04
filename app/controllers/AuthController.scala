@@ -4,6 +4,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import views._
 import play.api.mvc._
+import services.UserAuthenticatorComponent
 
 trait Secured {
 
@@ -18,14 +19,14 @@ trait Secured {
 
 }
 
-object AuthController extends ApplicationController {
+object AuthController extends ApplicationController with UserAuthenticatorComponent {
 
   val form = Form(
     tuple(
       "username" -> text,
       "password" -> text
     ) verifying ("Invalid username or password", result => result match {
-      case (username, password) => check(username, password)
+      case (username, password) => userAuthenticator.authenticate(username, password).isDefined
     })
   )
 

@@ -5,10 +5,9 @@ import play.api.data.Form
 import play.api.data.Forms._
 import models.Invoice
 import views._
-import play.api.db.slick._
 import play.api.mvc.Action
 
-object InvoiceController extends ApplicationController with InvoiceServiceComponent {
+object InvoiceController extends ApplicationController with InvoiceServiceComponent with Secured {
 
   val form = Form(
     mapping(
@@ -18,7 +17,7 @@ object InvoiceController extends ApplicationController with InvoiceServiceCompon
     )(Invoice.apply)(Invoice.unapply)
   )
 
-  def index = DBAction { implicit rs =>
+  def index = IsAuthenticated { username => implicit r =>
     Ok(html.invoices.index(invoiceService.all))
   }
 
@@ -26,7 +25,7 @@ object InvoiceController extends ApplicationController with InvoiceServiceCompon
     Ok(html.invoices.create(form))
   }
 
-  def save = DBAction { implicit rs =>
+  def save = Action { implicit r =>
     form.bindFromRequest.fold(
       formWithErrors => BadRequest(html.invoices.create(formWithErrors)),
       entity => {
@@ -36,18 +35,13 @@ object InvoiceController extends ApplicationController with InvoiceServiceCompon
     )
   }
 
-//  Coffees.findByPK(pk).list.headOption match {
-//    case Some(e) => Ok(html.coffees.editForm(pk, form.fill(e), supplierSelect))
-//    case None => NotFound
-//  }
-
-  def edit(pk: Long) = DBAction { implicit rs =>
+  def edit(pk: Long) = Action { implicit r =>
     Ok(html.invoices.edit(pk, form.fill(invoiceService.findByPK(pk))))
   }
 
   def update(pk: Long) = TODO
 
-  def destory(pk: Long) = DBAction { implicit rs =>
+  def destory(pk: Long) = Action { implicit r =>
     invoiceService.delete(pk)
     Redirect(routes.InvoiceController.index)
   }

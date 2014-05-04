@@ -5,6 +5,10 @@
 # Home page
 GET     /                           controllers.InvoiceController.index
 
+GET     /login                      controllers.AuthController.login
+POST    /login                      controllers.AuthController.authenticate
+GET     /logout                     controllers.AuthController.logout
+
 GET     /invoices/new               controllers.InvoiceController.create
 GET     /invoices/edit/:id			controllers.InvoiceController.edit(id:Long)
 POST    /invoices/edit/:id			controllers.InvoiceController.update(id:Long)

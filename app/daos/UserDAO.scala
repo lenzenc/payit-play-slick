@@ -3,13 +3,14 @@ package daos
 import models.User
 import play.api.db.slick.Config.driver.simple._
 
-trait UserDAOComponent {
+trait UserDAOComponent extends DAO {
 
   val userDAO = new UserDAOImpl
 
   trait UserDAO {
 
-    def all(implicit s: Session): List[User]
+    def all: List[User]
+    def findByUsername(username: String): Option[User]
 
   }
 
@@ -17,8 +18,16 @@ trait UserDAOComponent {
 
     val users = TableQuery[Users]
 
-    def all(implicit s: Session): List[User] = {
-      users.list
+    def all: List[User] = {
+      db.withSession { implicit s =>
+          users.list
+      }
+    }
+
+    def findByUsername(username: String): Option[User] = {
+      db.withSession { implicit s =>
+        users.where(_.username === username).firstOption
+      }
     }
 
   }

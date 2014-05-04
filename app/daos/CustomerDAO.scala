@@ -1,16 +1,15 @@
 package daos
 
 import models.Customer
-import scala.slick.lifted.Tag
 import play.api.db.slick.Config.driver.simple._
 
-trait CustomerDAOComponent {
+trait CustomerDAOComponent extends DAO {
 
   val customerDAO = new CustomerDAOImpl
 
   trait CustomerDAO {
 
-    def all(implicit s: Session): List[Customer]
+    def all: List[Customer]
 
   }
 
@@ -18,8 +17,10 @@ trait CustomerDAOComponent {
 
     val customers = TableQuery[Customers]
 
-    def all(implicit s: Session): List[Customer] = {
-      customers.list
+    def all: List[Customer] = {
+      db.withSession { implicit s =>
+          customers.list
+      }
     }
 
   }

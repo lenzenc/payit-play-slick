@@ -10,5 +10,5 @@ import play.api.mvc._
 // }
 
 trait ApplicationController extends Controller {
-	
+
 }

@@ -2,36 +2,35 @@ package services
 
 import daos.InvoiceDAOComponent
 import models.Invoice
-import play.api.db.slick.Config.driver.simple._
 
-trait InvoiceServiceComponent extends InvoiceDAOComponent {
+trait InvoiceServiceComponent extends InvoiceDAOComponent with ServiceComponent {
 
 	val invoiceService = new InvoiceServiceImpl
 
 	trait InvoiceService {
 	
-		def all(implicit s: Session): List[Invoice]
-    def insert(invoice: Invoice)(implicit s: Session)
-    def delete(pk: Long)(implicit s: Session)
-    def findByPK(pk: Long)(implicit s: Session): Invoice
+		def all: List[Invoice]
+    def insert(invoice: Invoice)
+    def delete(pk: Long)
+    def findByPK(pk: Long): Invoice
 
 	}
 
 	class InvoiceServiceImpl extends InvoiceService {
 
-		def all(implicit s: Session): List[Invoice] = {
-			invoiceDAO.all
+		def all: List[Invoice] = {
+      invoiceDAO.all
 		}
 
-    def insert(invoice: Invoice)(implicit s: Session) = {
+    def insert(invoice: Invoice) = {
       invoiceDAO.insert(invoice)
     }
 
-    def delete(pk: Long)(implicit s: Session) = {
+    def delete(pk: Long) = {
       invoiceDAO.delete(pk)
     }
 
-    def findByPK(pk: Long)(implicit s: Session): Invoice = {
+    def findByPK(pk: Long): Invoice = {
       invoiceDAO.findByPK(pk)
     }
 

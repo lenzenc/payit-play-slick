@@ -17,6 +17,13 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO users (first_name, last_name, username, password) VALUES (
+    "Bob",
+    "Smith",
+    "payit",
+    "password"
+);
+
 CREATE TABLE `invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_number` varchar(100) COLLATE utf8_unicode_ci NOT NULL,

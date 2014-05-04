@@ -4,16 +4,16 @@ import play.api.db.slick.Config.driver.simple._
 import scala.slick.lifted.Tag
 import models.Invoice
 
-trait InvoiceDAOComponent {
+trait InvoiceDAOComponent extends DAO {
 
 	val invoiceDAO = new InvoiceDAOImpl
 
 	trait InvoiceDAO {
 
-		def all(implicit s: Session): List[Invoice]
-    def insert(invoice: Invoice)(implicit s: Session)
-    def delete(pk: Long)(implicit s: Session)
-    def findByPK(pk: Long)(implicit s: Session): Invoice
+		def all: List[Invoice]
+    def insert(invoice: Invoice)
+    def delete(pk: Long)
+    def findByPK(pk: Long): Invoice
 
 	}
 
@@ -28,20 +28,28 @@ trait InvoiceDAOComponent {
 
 		val invoices = TableQuery[Invoices]
 
-		def all(implicit s: Session): List[Invoice] = {
-			invoices.list
+		def all: List[Invoice] = {
+      db.withSession { implicit s =>
+        invoices.list
+      }
 		}
 
-    def insert(invoice: Invoice)(implicit s: Session) = {
-      invoices.insert(invoice)
+    def insert(invoice: Invoice) = {
+      db.withSession { implicit s =>
+          invoices.insert(invoice)
+      }
     }
 
-    def delete(pk: Long)(implicit s: Session) = {
-      invoices.where(_.id === pk).delete
+    def delete(pk: Long) = {
+      db.withSession { implicit s =>
+          invoices.where(_.id === pk).delete
+      }
     }
 
-    def findByPK(pk: Long)(implicit s: Session): Invoice = {
-      invoices.where(_.id === pk).firstOption.get
+    def findByPK(pk: Long): Invoice = {
+      db.withSession { implicit s =>
+          invoices.where(_.id === pk).firstOption.get
+      }
     }
 
 	}

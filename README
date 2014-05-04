@@ -6,3 +6,8 @@ This is a sample application that is using a handful of technologies & patterns 
 * Scala
 * Slick
 * Cake Pattern for Dependency Injection
+* MySQL
+
+#### Push to GitHub
+git remote add origin https://github.com/lenzenc/payit-play-slick.git
+git push -u origin master
