@@ -3,17 +3,17 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.InvoiceController.index
+GET     /                           @controllers.InvoiceController.index
 
-GET     /login                      controllers.AuthController.login
-POST    /login                      controllers.AuthController.authenticate
-GET     /logout                     controllers.AuthController.logout
+GET     /login                      @controllers.AuthController.login
+POST    /login                      @controllers.AuthController.authenticate
+GET     /logout                     @controllers.AuthController.logout
 
-GET     /invoices/new               controllers.InvoiceController.create
-GET     /invoices/edit/:id			controllers.InvoiceController.edit(id:Long)
-POST    /invoices/edit/:id			controllers.InvoiceController.update(id:Long)
-POST    /invoices                   controllers.InvoiceController.save
-POST    /invoices/:id/delete        controllers.InvoiceController.destory(id: Long)
+GET     /invoices/new               @controllers.InvoiceController.create
+GET     /invoices/edit/:id			@controllers.InvoiceController.edit(id:Long)
+POST    /invoices/edit/:id			@controllers.InvoiceController.update(id:Long)
+POST    /invoices                   @controllers.InvoiceController.save
+POST    /invoices/:id/delete        @controllers.InvoiceController.destroy(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

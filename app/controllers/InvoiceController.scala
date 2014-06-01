@@ -1,13 +1,14 @@
 package controllers
 
-import services.InvoiceServiceComponent
 import play.api.data.Form
 import play.api.data.Forms._
 import models.Invoice
 import views._
 import play.api.mvc.Action
+import services.InvoiceServiceModule
 
-object InvoiceController extends ApplicationController with InvoiceServiceComponent with Secured {
+trait InvoiceController extends ApplicationController with Secured {
+  self: InvoiceServiceModule =>
 
   val form = Form(
     mapping(
@@ -41,7 +42,7 @@ object InvoiceController extends ApplicationController with InvoiceServiceCompon
 
   def update(pk: Long) = TODO
 
-  def destory(pk: Long) = Action { implicit r =>
+  def destroy(pk: Long) = Action { implicit r =>
     invoiceService.delete(pk)
     Redirect(routes.InvoiceController.index)
   }

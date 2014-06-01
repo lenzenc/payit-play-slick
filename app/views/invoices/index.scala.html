@@ -21,7 +21,7 @@
                 <td>@invoice.invoiceNumber</td>
                 <td>@invoice.total</td>
                 <td>
-                @form(routes.InvoiceController.destory(invoice.id.get)) {
+                @form(routes.InvoiceController.destroy(invoice.id.get)) {
                     <input type="submit" value="Delete">
                 }
                 <a href="@routes.InvoiceController.edit(invoice.id.get)">Edit</a>

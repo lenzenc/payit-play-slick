@@ -1,11 +1,12 @@
 package daos
 
 import models.Customer
-import play.api.db.slick.Config.driver.simple._
 
-trait CustomerDAOComponent extends DAO {
+trait CustomerDAOModule {
 
-  val customerDAO = new CustomerDAOImpl
+  import play.api.db.slick.Config.driver.simple._
+
+  val customerDAO: CustomerDAO
 
   trait CustomerDAO {
 
@@ -13,7 +14,7 @@ trait CustomerDAOComponent extends DAO {
 
   }
 
-  class CustomerDAOImpl extends CustomerDAO {
+  class CustomerDAOImpl extends CustomerDAO with DAO {
 
     val customers = TableQuery[Customers]
 

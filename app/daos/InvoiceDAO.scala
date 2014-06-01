@@ -1,12 +1,12 @@
 package daos
 
-import play.api.db.slick.Config.driver.simple._
-import scala.slick.lifted.Tag
 import models.Invoice
 
-trait InvoiceDAOComponent extends DAO {
+trait InvoiceDAOModule {
 
-	val invoiceDAO = new InvoiceDAOImpl
+  import play.api.db.slick.Config.driver.simple._
+
+	val invoiceDAO: InvoiceDAO
 
 	trait InvoiceDAO {
 
@@ -24,7 +24,7 @@ trait InvoiceDAOComponent extends DAO {
     def * = (id, invoiceNumber, total) <> (Invoice.tupled, Invoice.unapply _)
   }
 
-  class InvoiceDAOImpl extends InvoiceDAO {
+  class InvoiceDAOImpl extends InvoiceDAO with DAO {
 
 		val invoices = TableQuery[Invoices]
 

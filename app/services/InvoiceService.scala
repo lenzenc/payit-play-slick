@@ -1,11 +1,12 @@
 package services
 
-import daos.InvoiceDAOComponent
 import models.Invoice
+import daos.InvoiceDAOModule
 
-trait InvoiceServiceComponent extends InvoiceDAOComponent with ServiceComponent {
+trait InvoiceServiceModule {
+  self: InvoiceDAOModule =>
 
-	val invoiceService = new InvoiceServiceImpl
+	val invoiceService: InvoiceService
 
 	trait InvoiceService {
 	
@@ -18,21 +19,13 @@ trait InvoiceServiceComponent extends InvoiceDAOComponent with ServiceComponent 
 
 	class InvoiceServiceImpl extends InvoiceService {
 
-		def all: List[Invoice] = {
-      invoiceDAO.all
-		}
+		def all: List[Invoice] = invoiceDAO.all
 
-    def insert(invoice: Invoice) = {
-      invoiceDAO.insert(invoice)
-    }
+    def insert(invoice: Invoice) = invoiceDAO.insert(invoice)
 
-    def delete(pk: Long) = {
-      invoiceDAO.delete(pk)
-    }
+    def delete(pk: Long) = invoiceDAO.delete(pk)
 
-    def findByPK(pk: Long): Invoice = {
-      invoiceDAO.findByPK(pk)
-    }
+    def findByPK(pk: Long): Invoice = invoiceDAO.findByPK(pk)
 
 	}
 

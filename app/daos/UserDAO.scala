@@ -1,11 +1,12 @@
 package daos
 
 import models.User
-import play.api.db.slick.Config.driver.simple._
 
-trait UserDAOComponent extends DAO {
+trait UserDAOModule {
 
-  val userDAO = new UserDAOImpl
+  import play.api.db.slick.Config.driver.simple._
+
+  val userDAO: UserDAO
 
   trait UserDAO {
 
@@ -14,7 +15,7 @@ trait UserDAOComponent extends DAO {
 
   }
 
-  class UserDAOImpl extends UserDAO {
+  class UserDAOImpl extends UserDAO with DAO {
 
     val users = TableQuery[Users]
 

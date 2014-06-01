@@ -1,11 +1,12 @@
 package services
 
 import models.User
-import daos.UserDAOComponent
+import daos.UserDAOModule
 
-trait UserAuthenticatorComponent extends ServiceComponent with UserDAOComponent {
+trait UserAuthenticatorModule {
+  self: UserDAOModule =>
 
-  val userAuthenticator = new UserAuthenticatorImpl
+  val userAuthenticator: UserAuthenticator
 
   trait UserAuthenticator {
 

@@ -4,22 +4,10 @@ import play.api.data.Form
 import play.api.data.Forms._
 import views._
 import play.api.mvc._
-import services.UserAuthenticatorComponent
+import services.UserAuthenticatorModule
 
-trait Secured {
-
-  def username(request: RequestHeader) = request.session.get("username")
-
-  def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.AuthController.login)
-
-  def IsAuthenticated(f: => String => Request[AnyContent] => Result) =
-    Security.Authenticated(username, onUnauthorized) { user =>
-      Action(request => f(user)(request))
-  }
-
-}
-
-object AuthController extends ApplicationController with UserAuthenticatorComponent {
+trait AuthController extends ApplicationController {
+  self: UserAuthenticatorModule =>
 
   val form = Form(
     tuple(
